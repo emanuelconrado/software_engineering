@@ -4,7 +4,7 @@ import {
   collection,
   getDocs,
   addDoc
-} from "firebase/firestore";
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Ler dados da collection
 async function lerCollection(nomeCollection) {
@@ -19,7 +19,7 @@ async function lerCollection(nomeCollection) {
 }
 
 // Adicionar novo documento
-async function adicionarDocumento(nomeCollection, dados) {
+export async function adicionarDocumento(nomeCollection, dados) {
   try {
     const ref = collection(db, nomeCollection);
     const docRef = await addDoc(ref, dados);
@@ -30,7 +30,7 @@ async function adicionarDocumento(nomeCollection, dados) {
 }
 
 
-lerCollection('estabelecimentos')
+// lerCollection('estabelecimentos')
 
 // exemplo como adicionar um estabelecimento
 // adicionarDocumento('estabelecimentos',{

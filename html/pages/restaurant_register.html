@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- Fonte do Google para melhorar a tipografia -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <!-- Cabeçalho do site -->
     <header>
@@ -35,7 +37,7 @@
         <section id="register">
             <h2>Cadastre seu Restaurante</h2>
             <p>Preencha o formulário abaixo para registrar seu estabelecimento em nossa plataforma.</p>
-            
+
             <!-- Formulário de cadastro -->
             <form id="restaurant-form">
                 <!-- Dados do restaurante -->
@@ -43,69 +45,47 @@
                     <label for="restaurant-name">Nome do Restaurante*</label>
                     <input type="text" id="restaurant-name" name="restaurant-name" required>
                 </div>
-                
+
+
                 <div class="form-group">
-                    <label for="restaurant-type">Tipo de Cozinha*</label>
-                    <select id="restaurant-type" name="restaurant-type" required>
-                        <option value="">Selecione...</option>
-                        <option value="italiana">Italiana</option>
-                        <option value="japonesa">Japonesa</option>
-                        <option value="brasileira">Brasileira</option>
-                        <option value="vegetariana">Vegetariana/Vegana</option>
-                        <option value="outros">Outros</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="restaurant-address">Endereço*</label>
+                    <label for="restaurant-address">Rua*</label>
                     <input type="text" id="restaurant-address" name="restaurant-address" required>
                 </div>
-                
+
+                <div class="form-group">
+                    <label for="restaurant-address">Numero*</label>
+                    <input type="text" id="restaurant-number" name="restaurant-address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-address">CEP*</label>
+                    <input type="text" id="restaurant-cep" name="restaurant-address" required>
+                </div>
+
+
                 <div class="form-group">
                     <label for="restaurant-phone">Telefone*</label>
                     <input type="tel" id="restaurant-phone" name="restaurant-phone" required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="restaurant-email">E-mail*</label>
-                    <input type="email" id="restaurant-email" name="restaurant-email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="restaurant-website">Website (opcional)</label>
-                    <input type="url" id="restaurant-website" name="restaurant-website">
-                </div>
-                
+
                 <div class="form-group">
                     <label for="restaurant-description">Descrição do Restaurante*</label>
                     <textarea id="restaurant-description" name="restaurant-description" rows="4" required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Enviar Cadastro</button>
+
+                <label>Restrições alimentares*</label>
+                <div class="form-group" id="restricoes-container">
+                    <label><input type="checkbox" name="restricoes" value="lactose"> Lactose</label><br>
+                    <label><input type="checkbox" name="restricoes" value="gluten"> Glúten</label><br>
+                    <label><input type="checkbox" name="restricoes" value="ovo"> Ovo</label><br>
+                    <label><input type="checkbox" name="restricoes" value="soja"> Soja</label><br>
+                    <label><input type="checkbox" name="restricoes" value="amendoim"> Amendoim</label>
+                </div>
+                <button type="submit" id='save' class="submit-btn">Enviar Cadastro</button>
             </form>
         </section>
 
-        </section>
-            <form id="restaurant-form">
-                <div class="form-group">
-                    <label>Serviços Oferecidos</label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-option">
-                            <input type="checkbox" id="option1" name="options" value="1">
-                            <label for="option1">Intolerantes a lactose</label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" id="option2" name="options" value="2">
-                            <label for="option2">Opção 2</label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" id="option3" name="options" value="3">
-                            <label for="option3">Opção 3</label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </section>
-        
+
         <!-- Seção de benefícios -->
         <section id="benefits">
             <h2>Benefícios do Cadastro</h2>
@@ -134,4 +114,6 @@
         </div>
     </footer>
 </body>
+<script type="module" src="./restaurant_register.js"></script>
+
 </html>
