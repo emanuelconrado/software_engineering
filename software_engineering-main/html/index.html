@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Can I eat?</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header/Navbar -->
+      <header class="navbar">
+        <div class="container">
+          <a href="#" class="navbar-logo">
+            <i data-lucide="utensils-crossed" class="icon-food-orange"></i>
+            <span class="logo-text">Can I eat?</span>
+          </a>
+          <nav class="navbar-nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="./pages/restaurant_register.html" class="nav-link">Add Restaurant</a>
+            <button href="#" class="button button-primary">Explore Restaurants</button>
+          </nav>
+          <button class="button button-mobile-menu">
+            <i data-lucide="menu" class="icon-menu"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <section class="hero">
+          <i data-lucide="utensils-crossed" class="hero-icon"></i>
+          <h1 class="hero-title">Can I eat?</h1>
+          <p class="hero-subtitle">
+            Discover and save restaurants that cater to your dietary restrictions and preferences
+          </p>
+        </section>
+          
+        <div class="tab-content active" id="explore-tab">
+          <h1>Explore Restaurants</h1>
+          <div class="restaurant-list">
+            <!-- Restaurant cards will be dynamically added here by JavaScript -->
+          </div>
+        </div>
+        
+        <div class="tab-content" id="add-tab">
+          <div class="form-container">
+            <form id="restaurant-form" class="restaurant-form">
+              <div class="form-group">
+                <label for="name">Restaurant Name</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+              </div>
+              
+              <div class="form-group">
+                <label for="cuisine">Cuisine Type</label>
+                <input type="text" id="cuisine" name="cuisine" placeholder="e.g., Italian, Thai, Fusion" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label>Dietary Restrictions</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="vegan"> Vegan
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="vegetarian"> Vegetarian
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="gluten-free"> Gluten-Free
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="dairy-free"> Dairy-Free
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="nut-free"> Nut-Free
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="halal"> Halal
+                  </label>
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="restrictions" value="kosher"> Kosher
+                  </label>
+                </div>
+              </div>
+              
+              <button type="submit" class="button button-primary">Save Restaurant</button>
+            </form>
+          </div>
+        </div>
+
+      </main>
+      
+      <!-- Contact Section -->
+      <section id="contact" class="contact-section">
+        <div class="container">
+          <h2 class="section-title">Contact Us</h2>
+          <div class="contact-grid">
+            <div class="contact-info">
+              <h3>Get in Touch</h3>
+              <p>Have questions about dietary restrictions or want to suggest a restaurant?</p>
+              <p>We'd love to hear from you!</p>
+              <div class="contact-details">
+                <p><i data-lucide="mail" class="icon-tiny"></i> support@canieat.com</p>
+                <p><i data-lucide="phone" class="icon-tiny"></i> (555) 123-4567</p>
+                <p><i data-lucide="map-pin" class="icon-tiny"></i> 123 Foodie Street, Cuisine City, FC 12345</p>
+              </div>
+            </div>
+            <div class="contact-hours">
+              <h3>Operating Hours</h3>
+              <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+              <p>Saturday: 10:00 AM - 4:00 PM</p>
+              <p>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <p>© 2025 Can I eat? Find restaurants that respect your dietary needs.</p>
+        </div>
+      </footer>
+    </div>
+    
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="../script/script.js"></script>
+  </body>
+</html>
