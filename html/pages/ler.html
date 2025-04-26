@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Testar Firestore</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #729762;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #597445;
+    }
+    #resultados {
+      margin-top: 2rem;
+    }
+    .item {
+      background: white;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Testar leitura do Firestore</h1>
+  <input type="text" id="colecaoInput" placeholder="Nome da coleção" />
+  <button id="carregarBtn">Carregar Dados</button>
+
+  <div id="resultados"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    import { firebaseConfig } from "./firebase-env.js";
+
+    // Inicializa o app e o Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function lerCollection(nomeCollection) {
+      const ref = collection(db, nomeCollection);
+      const snapshot = await getDocs(ref);
+      const dados = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      console.log(dados);
+      return dados;
+    }
+
+    document.getElementById('carregarBtn').onclick = async () => {
+      const nome = document.getElementById('colecaoInput').value.trim();
+      if (!nome) {
+        alert("Informe o nome da coleção");
+        return;
+      }
+
+      const resultadosDiv = document.getElementById('resultados');
+      resultadosDiv.innerHTML = "<p>Carregando...</p>";
+
+      try {
+        const dados = await lerCollection(nome);
+        resultadosDiv.innerHTML = "";
+
+        if (dados.length === 0) {
+          resultadosDiv.innerHTML = "<p>Nenhum documento encontrado.</p>";
+        } else {
+          dados.forEach(item => {
+            const div = document.createElement('div');
+            div.className = "item";
+            div.innerHTML = `<pre>${JSON.stringify(item, null, 2)}</pre>`;
+            resultadosDiv.appendChild(div);
+          });
+        }
+      } catch (err) {
+        resultadosDiv.innerHTML = `<p style="color: red;">Erro ao carregar: ${err.message}</p>`;
+        console.error(err);
+      }
+    };
