@@ -1,147 +1,100 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Can I eat?</title>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanIEat? - Cadastro de Restaurantes</title>
     <link rel="stylesheet" href="../css/index.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-  </head>
-  <body>
-    <div id="app">
-      <!-- Header/Navbar -->
-      <header class="navbar">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="main-header">
         <div class="container">
-          <a href="#" class="navbar-logo">
-            <i data-lucide="utensils-crossed" class="icon-food-orange"></i>
-            <span class="logo-text">Can I eat?</span>
-          </a>
-          <nav class="navbar-nav">
-            <a href="#" class="nav-link">Home</a>
-            <a href="#contact" class="nav-link">Contato</a>
-            <a href="./pages/restaurant_register.html" class="nav-link">Adicionar restaurante</a>
-            <button href="#" class="button button-primary">Explorar restaurantes</button>
-          </nav>
-          <button class="button button-mobile-menu">
-            <i data-lucide="menu" class="icon-menu"></i>
-          </button>
+            <div class="logo">
+                <span class="logo-icon">🍽️</span>
+                <h1>CanIEat?</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Início</a></li>
+                    <li><a href="./pages/restaurant_register.html">Cadastrar</a></li>
+                    <li><a href="./pages/restaurant_search.html">Buscar</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
         </div>
-      </header>
+    </header>
 
-      <!-- Main Content -->
-      <main class="main-content">
-        <section class="hero">
-          <i data-lucide="utensils-crossed" class="hero-icon"></i>
-          <h1 class="hero-title">Can I eat?</h1>
-          <p class="hero-subtitle">
-            Descubra e salve restaurantes que atendem às suas restrições e preferências alimentares
-          </p>
-        </section>
-          
-        <div class="tab-content active" id="explore-tab">
-          <h1>Explorar restaurantes</h1>
-          <div class="restaurant-list">
-            <!-- Restaurant cards will be dynamically added here by JavaScript -->
-          </div>
+    <!-- Banner Principal -->
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Seu restaurante visível para milhares de clientes</h2>
+                <p>Cadastre seu estabelecimento e aumente suas vendas</p>
+                <a href="./pages/restaurant_register.html">Cadastrar Agora</a>
+            </div>
         </div>
-        
-        <div class="tab-content" id="add-tab">
-          <div class="form-container">
-            <form id="restaurant-form" class="restaurant-form">
-              <div class="form-group">
-                <label for="name">Restaurant Name</label>
-                <input type="text" id="name" name="name" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="location">Location</label>
-                <input type="text" id="location" name="location" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone">
-              </div>
-              
-              <div class="form-group">
-                <label for="cuisine">Cuisine Type</label>
-                <input type="text" id="cuisine" name="cuisine" placeholder="e.g., Italian, Thai, Fusion" required>
-              </div>
-              
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="3" required></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label>Dietary Restrictions</label>
-                <div class="checkbox-group">
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="vegan"> Vegano
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="vegetarian"> Vegetariano
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="gluten-free"> Gluten-Free
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="dairy-free"> Sem Latictose
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="nut-free"> Sem nozes
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="halal"> Halal
-                  </label>
-                  <label class="checkbox-label">
-                    <input type="checkbox" name="restrictions" value="kosher"> Kosher
-                  </label>
+    </section>
+
+    <!-- Benefícios -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Por que cadastrar seu restaurante?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">👥</div>
+                    <h3>Mais Visibilidade</h3>
+                    <p>Aumente sua exposição para milhares de clientes potenciais na sua região.</p>
                 </div>
-              </div>
-              
-              <button type="submit" class="button button-primary">Save Restaurant</button>
-            </form>
-          </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💳</div>
+                    <h3>Mais Vendas</h3>
+                    <p>Clientes podem encontrar e reservar diretamente pelo nosso site.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Gestão Simplificada</h3>
+                    <p>Painel de controle fácil para gerenciar seu perfil e ofertas.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-      </main>
-      
-      <!-- Contact Section -->
-      <section id="contact" class="contact-section">
+    <!-- Chamada para Ação -->
+    <section class="cta-section">
         <div class="container">
-          <h2 class="section-title">Nos Contate</h2>
-          <div class="contact-grid">
-            <div class="contact-info">
-              <h3>Entre em contato</h3>
-              <p>Tem dúvidas sobre restrições alimentares ou quer sugerir um restaurante?</p>
-              <p>Gostaríamos muito de ouvir de você!</p>
-              <div class="contact-details">
-                <p><i data-lucide="mail" class="icon-tiny"></i> support@canieat.com</p>
-                <p><i data-lucide="phone" class="icon-tiny"></i> (555) 123-4567</p>
-                <p><i data-lucide="map-pin" class="icon-tiny"></i> 123 Rua Da Comida, Cidade Da Culinaria, FC 12345</p>
-              </div>
-            </div>
-            <div class="contact-hours">
-              <h3>Horário de funcionamento</h3>
-              <p>Segunda A Sexta: 9:00 Da Manhã as 6:00 Da Tarde</p>
-              <p>Sábado: 10:00 Da Manhã as 4:00 Da Tarde</p>
-              <p>Domingo: Fechado</p>
-            </div>
-          </div>
+            <h2>Pronto para levar seu restaurante ao próximo nível?</h2>
+            <a href="#" class="cta-button">Cadastre-se Gratuitamente</a>
         </div>
-      </section>
-      
-      <!-- Footer -->
-      <footer class="footer">
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
         <div class="container">
-          <p>© 2025 Can I eat? Encontre restaurantes que respeitem suas necessidades alimentares.</p>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">🍽️</span>
+                    <h3>CanIEat?</h3>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contato</h4>
+                    <p>contato@canieat?.com</p>
+                    <p>(11) 1234-5678</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 CanIEat?. Todos os direitos reservados.</p>
+            </div>
         </div>
-      </footer>
-    </div>
-    
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script src="../script/script.js"></script>
-  </body>
+    </footer>
+</body>
 </html>

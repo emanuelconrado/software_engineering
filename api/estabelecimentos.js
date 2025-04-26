@@ -3,8 +3,11 @@ import { db } from './firebase_config.js';
 import {
   collection,
   getDocs,
-  addDoc
+  addDoc,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
 
 // Ler dados da collection
 async function lerCollection(nomeCollection) {
@@ -14,7 +17,6 @@ async function lerCollection(nomeCollection) {
     id: doc.id,
     ...doc.data()
   }));
-  console.log(dados);
   return dados;
 }
 
@@ -24,8 +26,10 @@ export async function adicionarDocumento(nomeCollection, dados) {
     const ref = collection(db, nomeCollection);
     const docRef = await addDoc(ref, dados);
     console.log("Documento adicionado com ID:", docRef.id);
+    return docRef.id;
   } catch (e) {
     console.error("Erro ao adicionar documento:", e);
+    throw e;
   }
 }
 
