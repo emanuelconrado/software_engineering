@@ -1,0 +1,104 @@
+/* Reset básico para garantir que todos os elementos sejam consistentes */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variáveis de cores */
+:root {
+    --primary: #729762; /* Cor principal */
+    --border-color: #ddd; /* Cor da borda */
+    --radius: 8px; /* Raio de borda para arredondar os elementos */
+    --shadow-md: rgba(0, 0, 0, 0.1); /* Sombra suave */
+    --card-bg: white; /* Cor de fundo do card */
+    --text-muted: #777; /* Cor do texto desativado */
+}
+
+/* Estilo específico da página de cadastro */
+.hero {
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: var(--primary);
+    color: white;
+}
+
+.hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    color: #f8fafc;
+}
+
+/* Formulário de cadastro */
+.form-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+.restaurant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+input[type="email"],
+input[type="password"] {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Estilo do botão */
+.button-primary {
+    background-color: var(--primary); /* Cor principal no botão */
+    color: white; /* Texto branco */
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+.button-primary:hover {
+    background-color: #475a35; /* Cor mais escura ao passar o mouse */
+    transform: scale(1.05); /* Aumenta o botão levemente */
+}
+
+/* Estilo do link para a página de login */
+p a {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* Estilo do rodapé */
+.footer {
+    padding: 1.5rem 0;
+    text-align: center;
+    background-color: #f8fafc;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}

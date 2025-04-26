@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="../../css/cadastro.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1 class="hero-title">Criar Conta</h1>
+      <p class="hero-subtitle">Cadastre-se para usar o Can I Eat?!</p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="form-container">
+      <form id="cadastroForm" class="restaurant-form">
+        <div class="form-group">
+          <label for="cadastroEmail">E-mail</label>
+          <input type="email" id="cadastroEmail" placeholder="Digite seu e-mail" required />
+        </div>
+
+        <div class="form-group">
+          <label for="cadastroSenha">Senha</label>
+          <input type="password" id="cadastroSenha" placeholder="Crie uma senha" required />
+        </div>
+
+        <button type="button" id="cadastroButton" class="button button-primary">Cadastrar</button>
+      </form>
+
+      <p style="text-align: center; margin-top: 1rem;">
+        Já tem uma conta? <a href="login.html">Fazer login</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Plataforma de Restaurantes. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+</body>
+<script type="module" src="cadastro.js"></script>
+</html>
