@@ -78,7 +78,7 @@ async function carregarEnderecosDoFirebase() {
       const bairro = data.bairro || '';
       const cidade = data.cidade || 'São Paulo';
       const estado = data.estado || 'SP';
-      const endereco = `${rua}, ${numero}, ${bairro}, ${cidade} - ${estado}`;
+      const endereco = `${rua}, ${numero}, ${bairro}`;
 
       buscarEndereco(endereco, nome);
     });
