@@ -81,14 +81,22 @@ searchForm.addEventListener('submit', async (e) => {
 // Função para criar o HTML de um card de restaurante
 function criarCardRestaurante(restaurante) {
     return `
-        <div class="restaurant-card" data-id="${restaurante.id}">
+        <div class="restaurant-card"
+             data-id="${restaurante.id}"
+             data-rua="${restaurante.rua || ''}"
+             data-numero="${restaurante.numero || ''}"
+             data-bairro="${restaurante.bairro || ''}"
+             data-cep="${restaurante.cep || ''} >
+             
             <h3 class="restaurant-title">${restaurante.nome || 'Nome não informado'}</h3>
+            
             <div class="restaurant-details">
                 <p><strong>Endereço:</strong> ${restaurante.rua || ''}, ${restaurante.numero || ''} - ${restaurante.bairro || ''}</p>
                 <p><strong>CEP:</strong> ${restaurante.cep || ''}</p>
                 <p><strong>Telefone:</strong> ${restaurante.telefone || ''}</p>
                 <p><strong>Restrições atendidas:</strong> ${restaurante.restricoes ? restaurante.restricoes.join(', ') : 'Nenhuma informação'}</p>
             </div>
+
             <div class="restaurant-actions">
                 <a href="#" class="restaurant-button go-button">Como chegar lá?</a>
                 <a href="#" class="restaurant-button menu-button">Cardápio</a>
@@ -106,6 +114,15 @@ function configurarBotoesRestaurante() {
             const restaurantId = card.getAttribute('data-id');
             console.log('Redirecionar para restaurante ID:', restaurantId);
             // Lógica de redirecionamento para o restaurante
+            const rua = card.getAttribute('data-rua')
+            const numero = card.getAttribute('data-numero')
+            const bairro = card.getAttribute('data-bairro')
+            const endereco = `${rua}, ${numero} ${bairro}`;
+
+            const destino = encodeURIComponent(endereco);
+            console.log(endereco)
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${destino}`;
+            window.open(url, '_blank');
         });
     });
 
