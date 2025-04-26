@@ -7,12 +7,24 @@ const searchForm = document.getElementById('searchForm');
 const searchInput = document.getElementById('searchInput');
 const restaurantsList = document.getElementById('restaurantsList');
 
+// Função para normalizar strings
+function normalizarString(str) {
+    if (!str) return '';
+    return str
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9]/g, '')
+        .toLowerCase();
+}
+
 // Carregar todos os restaurantes ao iniciar a página
 document.addEventListener('DOMContentLoaded', carregarRestaurantes);
 
 // Função para carregar todos os restaurantes
 async function carregarRestaurantes() {
     try {
+        restaurantsList.innerHTML = '<p class="loading-message">Carregando restaurantes...</p>';
+        
         const querySnapshot = await getDocs(collection(db, 'estabelecimentos'));
         
         if (querySnapshot.empty) {
@@ -40,7 +52,7 @@ async function carregarRestaurantes() {
 // Função para buscar restaurantes por nome
 searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const termoBusca = searchInput.value.trim().toLowerCase();
+    const termoBusca = normalizarString(searchInput.value.trim());
     
     if (!termoBusca) {
         carregarRestaurantes();
@@ -48,6 +60,9 @@ searchForm.addEventListener('submit', async (e) => {
     }
     
     try {
+        restaurantsList.innerHTML = '<p class="loading-message">Buscando restaurantes...</p>';
+        
+        // Primeiro tentamos uma busca direta no Firestore
         const q = query(
             collection(db, 'estabelecimentos'),
             where('nome', '>=', termoBusca),
@@ -57,20 +72,45 @@ searchForm.addEventListener('submit', async (e) => {
         const querySnapshot = await getDocs(q);
         
         if (querySnapshot.empty) {
-            restaurantsList.innerHTML = '<p class="no-results">Nenhum restaurante encontrado com esse nome.</p>';
-            return;
+            // Se não encontrou, fazemos uma busca mais abrangente no cliente
+            const allRestaurants = await getDocs(collection(db, 'estabelecimentos'));
+            let html = '';
+            let encontrados = false;
+            
+            allRestaurants.forEach(doc => {
+                const restaurante = {
+                    id: doc.id,
+                    ...doc.data()
+                };
+                
+                const nomeNormalizado = normalizarString(restaurante.nome || '');
+                
+                if (nomeNormalizado.includes(termoBusca)) {
+                    html += criarCardRestaurante(restaurante);
+                    encontrados = true;
+                }
+            });
+            
+            if (!encontrados) {
+                restaurantsList.innerHTML = '<p class="no-results">Nenhum restaurante encontrado com esse nome.</p>';
+                return;
+            }
+            
+            restaurantsList.innerHTML = html;
+        } else {
+            // Se encontrou resultados na busca direta
+            let html = '';
+            querySnapshot.forEach(doc => {
+                const restaurante = {
+                    id: doc.id,
+                    ...doc.data()
+                };
+                html += criarCardRestaurante(restaurante);
+            });
+            
+            restaurantsList.innerHTML = html;
         }
         
-        let html = '';
-        querySnapshot.forEach(doc => {
-            const restaurante = {
-                id: doc.id,
-                ...doc.data()
-            };
-            html += criarCardRestaurante(restaurante);
-        });
-        
-        restaurantsList.innerHTML = html;
         configurarBotoesRestaurante();
     } catch (error) {
         console.error("Erro na busca:", error);
@@ -78,7 +118,7 @@ searchForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Função para criar o HTML de um card de restaurante
+// Restante do código permanece igual...
 function criarCardRestaurante(restaurante) {
     return `
         <div class="restaurant-card"
@@ -86,7 +126,7 @@ function criarCardRestaurante(restaurante) {
              data-rua="${restaurante.rua || ''}"
              data-numero="${restaurante.numero || ''}"
              data-bairro="${restaurante.bairro || ''}"
-             data-cep="${restaurante.cep || ''} >
+             data-cep="${restaurante.cep || ''}">
              
             <h3 class="restaurant-title">${restaurante.nome || 'Nome não informado'}</h3>
             
@@ -105,22 +145,17 @@ function criarCardRestaurante(restaurante) {
     `;
 }
 
-// Configurar os event listeners dos botões
 function configurarBotoesRestaurante() {
     document.querySelectorAll('.go-button').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
             const card = e.target.closest('.restaurant-card');
             const restaurantId = card.getAttribute('data-id');
-            console.log('Redirecionar para restaurante ID:', restaurantId);
-            // Lógica de redirecionamento para o restaurante
-            const rua = card.getAttribute('data-rua')
-            const numero = card.getAttribute('data-numero')
-            const bairro = card.getAttribute('data-bairro')
+            const rua = card.getAttribute('data-rua');
+            const numero = card.getAttribute('data-numero');
+            const bairro = card.getAttribute('data-bairro');
             const endereco = `${rua}, ${numero} ${bairro}`;
-
             const destino = encodeURIComponent(endereco);
-            console.log(endereco)
             const url = `https://www.google.com/maps/dir/?api=1&destination=${destino}`;
             window.open(url, '_blank');
         });
@@ -132,7 +167,7 @@ function configurarBotoesRestaurante() {
             const card = e.target.closest('.restaurant-card');
             const restaurantId = card.getAttribute('data-id');
             console.log('Abrir cardápio do restaurante ID:', restaurantId);
-            // Lógica para abrir o cardápio
+            // Implementar abertura do cardápio aqui
         });
     });
 }
