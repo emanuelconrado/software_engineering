@@ -62,17 +62,31 @@ searchForm.addEventListener('submit', async (e) => {
     try {
         restaurantsList.innerHTML = '<p class="loading-message">Buscando restaurantes...</p>';
         
-        // Primeiro tentamos uma busca direta no Firestore
-        const q = query(
+        const nomes = query(
             collection(db, 'estabelecimentos'),
             where('nome', '>=', termoBusca),
             where('nome', '<=', termoBusca + '\uf8ff')
         );
+
+        const restricoes = query(
+            collection(db, 'estabelecimentos'),
+            where('restricoes', 'array-contains', termoBusca)
+        );
         
-        const querySnapshot = await getDocs(q);
         
-        if (querySnapshot.empty) {
-            // Se não encontrou, fazemos uma busca mais abrangente no cliente
+        const [snapshotNome, snapshotRestricoes] = await Promise.all([
+            getDocs(nomes),
+            getDocs(restricoes)
+        ]);
+
+        const docsMap = new Map();
+        snapshotNome.forEach(doc => docsMap.set(doc.id, doc.data()));
+        snapshotRestricoes.forEach(doc => docsMap.set(doc.id, doc.data()));
+
+        const querySnapshot = Array.from(docsMap.values());
+
+        if (querySnapshot.length === 0) {
+            // Se não encontrou nada, faz filtro no cliente
             const allRestaurants = await getDocs(collection(db, 'estabelecimentos'));
             let html = '';
             let encontrados = false;
@@ -91,23 +105,19 @@ searchForm.addEventListener('submit', async (e) => {
                 }
             });
             
-            if (!encontrados) {
-                restaurantsList.innerHTML = '<p class="no-results">Nenhum restaurante encontrado com esse nome.</p>';
-                return;
-            }
-            
-            restaurantsList.innerHTML = html;
+            restaurantsList.innerHTML = encontrados
+                ? html
+                : '<p class="no-results">Nenhum restaurante encontrado com esse nome.</p>';
         } else {
-            // Se encontrou resultados na busca direta
             let html = '';
-            querySnapshot.forEach(doc => {
+            docsMap.forEach((data, id) => {
                 const restaurante = {
-                    id: doc.id,
-                    ...doc.data()
+                    id,
+                    ...data
                 };
                 html += criarCardRestaurante(restaurante);
             });
-            
+
             restaurantsList.innerHTML = html;
         }
         
@@ -117,6 +127,7 @@ searchForm.addEventListener('submit', async (e) => {
         restaurantsList.innerHTML = '<p class="error-message">Erro na busca. Tente novamente.</p>';
     }
 });
+
 
 // Restante do código permanece igual...
 function criarCardRestaurante(restaurante) {
