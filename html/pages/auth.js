@@ -14,7 +14,7 @@ loginButton.onclick = (e) => {
   loginUsuario(email, senha)
     .then(user => {
       // Se o login for bem-sucedido, redireciona para a página inicial
-      localStorage.setItem('userEmail', user.email);
+      localStorage.setItem('user', user)
       console.log('Usuário logado:', user.email);
       window.location.href = "../index.html"; // Redireciona para a página inicial
     })

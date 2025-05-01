@@ -1,9 +1,14 @@
-import { db } from '../../../api/firebase_config.js';
-import { collection, addDoc, doc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js';
+import { auth, db } from '../../../api/firebase_config.js'; // Importe a configuração do Firebase
+import { doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { adicionarSubDocumento } from '../../../api/estabelecimentos.js'
 
 const form = document.getElementById('reviewForm');
 const message = document.getElementById('message');
-const restauranteId = localStorage.getItem('selectedRestaurantId');  // Verifique se o ID está correto
+const restauranteId = localStorage.getItem('selectedRestaurantId'); 
+
+let idAutor = 'Anônimo';
+
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -11,12 +16,18 @@ form.addEventListener('submit', async (e) => {
   const nota = parseInt(document.getElementById('reviewRating').value);
   const comentario = document.getElementById('reviewComment').value.trim();
 
-  console.log(restauranteId);
-
-  if ( nota < 1 || nota > 5 || !comentario) {
+  if (nota < 1 || nota > 5 || !comentario) {
     message.textContent = 'Preencha todos os campos corretamente.';
     return;
   }
+
+  console.log(idAutor)
+
+  const userRef = doc(db, 'usuarios', idAutor);
+  const userSnap = await getDoc(userRef);
+
+
+  const dados = userSnap.data();
 
   try {
     // Verifique se restaurantId é um valor válido antes de continuar
@@ -25,24 +36,13 @@ form.addEventListener('submit', async (e) => {
       return;
     }
 
-    // Referência para o documento do restaurante
-    const avaliacaoRef = doc(db, 'estabelecimentos', restauranteId, 'avaliacoes');
-    
-    // Verifique se a referência do restaurante é válida
-    console.log('Restaurante:', avaliacaoRef);
-    
-    // Referência para a subcoleção 'avaliacoes' dentro do restaurante
-    const avaliacoesCollectionRef = collection(avaliacaoRef, 'avaliacoes');
-    
-    // Verifique se a referência da subcoleção está correta
-    console.log('Subcoleção Avaliações:', avaliacoesCollectionRef);
 
-    // Adicionando a avaliação à subcoleção
-    await addDoc(avaliacoesCollectionRef, {
-      nota,
-      comentario,
-      autor: 'Anônimo',
-      data: serverTimestamp(),
+    // Cria o novo documento dentro da subcoleção
+    await adicionarSubDocumento('estabelecimentos', restauranteId, 'avaliacoes', {
+      nota: nota,
+      comentario: comentario,
+      autor: dados.nome,
+      data:  new Date()
     });
 
     message.textContent = 'Avaliação enviada com sucesso!';
@@ -50,5 +50,13 @@ form.addEventListener('submit', async (e) => {
   } catch (err) {
     console.error('Erro ao enviar avaliação:', err);
     message.textContent = 'Erro ao enviar avaliação.';
+  }
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    idAutor = user.uid
+  } else {
+    window.location.href = 'login.html'; // Se o usuário não estiver autenticado, redireciona para login
   }
 });
