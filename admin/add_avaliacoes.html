@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Criar Subcoleções de Avaliações</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Criar Subcoleções "avaliacoes"</h1>
+  <p>Isso adicionará uma subcoleção <strong>avaliacoes</strong> com uma entrada de exemplo para cada restaurante no Firestore.</p>
+  <button id="criar-btn">Executar Script</button>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+
+  <!-- Configuração Firebase -->
+  <script type="module" src="../api/firebase_config.js"></script>
+
+  <!-- Script principal -->
+  <script type="module">
+    import { db } from '../api/firebase_config.js';
+    import { addDoc, getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    async function criarSubcolecoesAvaliacao() {
+      const estabelecimentosRef = collection(db, 'estabelecimentos');
+      const snapshot = await getDocs(estabelecimentosRef);
+
+      for (const docSnap of snapshot.docs) {
+        const restauranteId = docSnap.id;
+        
+        // Cria a referência para a subcoleção 'avaliacoes'
+        const avaliacaoRef = collection(db, 'estabelecimentos', restauranteId, 'avaliacoes');
+
+        // Adiciona um novo documento na subcoleção
+        await addDoc(avaliacaoRef, {
+          autor: 'Sistema',
+          nota: 5,
+          comentario: 'Avaliação inicial automática.',
+          data: new Date()
+        });
+
+        console.log(`Subcoleção criada para: ${restauranteId}`);
+      }
+
+      alert("Subcoleções criadas com sucesso!");
+    }
+
+    document.getElementById('criar-btn').addEventListener('click', criarSubcolecoesAvaliacao);
+  </script>
+</body>
+</html>

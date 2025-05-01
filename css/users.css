@@ -1,0 +1,98 @@
+/* Reset básico para garantir que todos os elementos sejam consistentes */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variáveis de cores */
+:root {
+    --primary: #729762;
+    --border-color: #ddd;
+    --radius: 8px;
+    --shadow-md: rgba(0, 0, 0, 0.1);
+    --card-bg: white;
+    --text-muted: #777;
+}
+
+/* Estilo específico da página de perfil */
+.hero {
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: var(--primary);
+    color: white;
+}
+
+.hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.main-content {
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+h2, h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.user-info p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="email"] {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.button-primary {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+    text-align: center;
+}
+
+.button-primary:hover {
+    background-color: #475a35;
+    transform: scale(1.05);
+}
+
+.footer {
+    padding: 1.5rem 0;
+    text-align: center;
+    background-color: #f8fafc;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}

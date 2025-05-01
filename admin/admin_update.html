@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Atualizar nomes normalizados</title>
+</head>
+<body>
+  <h1>Atualizar nomes normalizados dos restaurantes</h1>
+  <button id="executarBtn">Executar atualização</button>
+  <pre id="log"></pre>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { db } from '../api/firebase_config.js';
+    import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const log = (msg) => {
+      document.getElementById('log').textContent += msg + '\n';
+    };
+
+    function normalizarString(str) {
+      return str.normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-zA-Z0-9]/g, "")
+                .toLowerCase();
+    }
+
+    async function atualizarNomesNormalizados() {
+      const snapshot = await getDocs(collection(db, 'estabelecimentos'));
+      log(`Encontrados ${snapshot.size} documentos.`);
+
+      for (const documento of snapshot.docs) {
+        const data = documento.data();
+        const nome = data.nome || '';
+        const nomeNormalizado = normalizarString(nome);
+
+        await updateDoc(doc(db, 'estabelecimentos', documento.id), {
+          nome_normalizado: nomeNormalizado
+        });
+
+        log(`Atualizado: ${nome} -> ${nomeNormalizado}`);
+      }
+
+      log("✅ Atualização concluída!");
+    }
+
+    document.getElementById('executarBtn').addEventListener('click', atualizarNomesNormalizados);
+  </script>
+</body>
+</html>

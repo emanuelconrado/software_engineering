@@ -1,3 +1,16 @@
+const logoutButton = document.getElementById('logoutButton');
+
+logoutButton.onclick = () => {
+  // Remove os dados do usuário armazenados localmente
+  localStorage.removeItem('userEmail');
+
+  // Opcional: limpar todo o localStorage
+  // localStorage.clear();
+
+  console.log('Usuário deslogado');
+  window.location.href = '../html/pages/login.html'; // Redireciona para a página de login
+};
+
 //<button class="tab-trigger" data-tab="add">Add Restaurant</button>
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize Lucide icons

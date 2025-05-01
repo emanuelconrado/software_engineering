@@ -1,4 +1,4 @@
-import { loginUsuario } from "../../api/login.js"; // Supondo que essas funções estejam em um arquivo separado
+import { loginUsuario } from "../../api/login.js";
 
 const loginButton = document.getElementById('loginButton');
 
@@ -14,6 +14,7 @@ loginButton.onclick = (e) => {
   loginUsuario(email, senha)
     .then(user => {
       // Se o login for bem-sucedido, redireciona para a página inicial
+      localStorage.setItem('userEmail', user.email);
       console.log('Usuário logado:', user.email);
       window.location.href = "../index.html"; // Redireciona para a página inicial
     })
@@ -23,3 +24,4 @@ loginButton.onclick = (e) => {
       alert("E-mail ou senha inválidos. Tente novamente.");
     });
 };
+

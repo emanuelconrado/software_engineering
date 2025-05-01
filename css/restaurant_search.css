@@ -389,3 +389,180 @@ body {
         font-size: 0.8rem;
     }
 }
+
+.review-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    animation: slideDown 0.3s ease;
+}
+
+.review-container h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.review {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.review:last-child {
+    border-bottom: none;
+}
+
+.review p {
+    margin: 0.2rem 0;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Cards do Restaurante */
+.restaurant-card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid #658147;
+    margin-bottom: 30px;
+    position: relative; /* Para o painel lateral se posicionar */
+    overflow: hidden; /* Impede o conteúdo de transbordar */
+    transition: all 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.restaurant-title {
+    color: #3a4a2d;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Estilo do painel lateral */
+.side-panel {
+    display: none; /* Inicialmente escondido */
+    position: absolute;
+    top: 0;
+    right: -350px; /* Lateral fora da tela, ajustado para maior suavidade */
+    width: 350px; /* Aumentado o tamanho do painel */
+    height: 100%;
+    background-color: #E7F0DC;
+    padding: 20px;
+    border-left: 4px solid #658147;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.5s ease-out; /* Usando transform para evitar sobreposição */
+}
+
+.restaurant-card:hover .side-panel {
+    display: block;
+    transform: translateX(-100%); /* Mover o painel para dentro do card */
+}
+
+.side-panel h3 {
+    font-size: 1.3rem;
+    color: #3a4a2d;
+    margin-bottom: 15px;
+}
+
+.side-panel p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* Estilos para o botão */
+.toggle-panel-button {
+    background-color: #658147;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    margin-top: 15px;
+}
+
+.toggle-panel-button:hover {
+    background-color: #597445;
+    transform: translateY(-2px);
+}
+
+/* Botões de ação do restaurante */
+.restaurant-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Estilo base para ambos os botões */
+.restaurant-button {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-align: center;
+    white-space: nowrap;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.go-button {
+    background-color: #729762;
+    color: #ffffff;
+    border: 1px solid #729762;
+}
+
+.go-button:hover {
+    background-color: #597445;
+    transform: translateY(-1px);
+}
+
+.menu-button {
+    background-color: #729762;
+    color: #ffffff;
+    border: 1px solid #729762;
+}
+
+.menu-button:hover {
+    background-color: #597445;
+    transform: translateY(-1px);
+}

@@ -65,4 +65,46 @@
       height: 500px;
     }
   }
+
+  #mapSearchForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  
+  #mapSearchInput {
+    flex: 1;
+    max-width: 400px;
+    padding: 10px 15px;
+    border: 2px solid #729762;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    background-color: #fff;
+  }
+  
+  #mapSearchInput:focus {
+    border-color: #597445;
+    box-shadow: 0 0 0 3px rgba(89, 116, 69, 0.2);
+  }
+  
+  #mapSearchForm button {
+    padding: 10px 20px;
+    background-color: #729762;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  #mapSearchForm button:hover {
+    background-color: #597445;
+  }
+  
   

@@ -122,11 +122,25 @@ searchForm.addEventListener('submit', async (e) => {
         }
         
         configurarBotoesRestaurante();
+        configurarPainelLateral();
     } catch (error) {
         console.error("Erro na busca:", error);
         restaurantsList.innerHTML = '<p class="error-message">Erro na busca. Tente novamente.</p>';
     }
 });
+
+function formatarData(timestamp) {
+    if (!timestamp || !timestamp.toDate) return 'Data desconhecida';
+    
+    const data = timestamp.toDate();
+    return data.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
 
 
 // Restante do código permanece igual...
@@ -150,13 +164,24 @@ function criarCardRestaurante(restaurante) {
 
             <div class="restaurant-actions">
                 <a href="#" class="restaurant-button go-button">Como chegar lá?</a>
-                <a href="#" class="restaurant-button menu-button">Cardápio</a>
+                <a href="#" class="restaurant-button menu-button">Avaliações</a>
             </div>
         </div>
     `;
 }
 
 function configurarBotoesRestaurante() {
+    document.querySelectorAll('.menu-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const card = e.target.closest('.restaurant-card');
+            const restaurantId = card.getAttribute('data-id');
+
+            localStorage.setItem('selectedRestaurantId', restaurantId);
+            window.open('../news/news_content/reviews_search.html', '_blank');
+        });
+    });
+
     document.querySelectorAll('.go-button').forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
@@ -172,13 +197,78 @@ function configurarBotoesRestaurante() {
         });
     });
 
-    document.querySelectorAll('.menu-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const card = e.target.closest('.restaurant-card');
+    document.querySelectorAll('.restaurant-card').forEach(card => {
+        card.addEventListener('mouseenter', async (e) => {
             const restaurantId = card.getAttribute('data-id');
-            console.log('Abrir cardápio do restaurante ID:', restaurantId);
-            // Implementar abertura do cardápio aqui
+    
+            // Verifica se já existe o painel de avaliações
+            let existingContainer = card.querySelector('.review-container');
+            if (existingContainer) {
+                return; // Se o painel já estiver aberto, não faz nada
+            }
+    
+            // Cria o container para as avaliações
+            const reviewContainer = document.createElement('div');
+            reviewContainer.classList.add('review-container');
+            reviewContainer.innerHTML = '<p>Carregando avaliações...</p>';
+            card.appendChild(reviewContainer);
+    
+            try {
+                const reviewsRef = collection(db, 'estabelecimentos', restaurantId, 'avaliacoes');
+                const snapshot = await getDocs(reviewsRef);
+    
+                if (snapshot.empty) {
+                    reviewContainer.innerHTML = '<p>Este restaurante ainda não possui avaliações.</p>';
+                    return;
+                }
+    
+                let html = '<h4>Avaliações:</h4>';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    html += `
+                        <div class="review">
+                            <p><strong>Autor:</strong> ${data.autor || 'Anônimo'}</p>
+                            <p><strong>Nota:</strong> ${data.nota || 'Não informada'}</p>
+                            <p><strong>Comentário:</strong> ${data.comentario || 'Sem comentário'}</p>
+                            <p><strong>Data da avaliação:</strong> ${formatarData(data.data) || 'Sem data'}</p>
+                        </div>
+                    `;
+                });
+    
+                reviewContainer.innerHTML = html;
+            } catch (err) {
+                console.error('Erro ao carregar avaliações:', err);
+                reviewContainer.innerHTML = '<p>Erro ao carregar avaliações.</p>';
+            }
+        });
+    
+        // Quando o mouse sai do card, removemos o painel de avaliações
+        card.addEventListener('mouseleave', () => {
+            const reviewContainer = card.querySelector('.review-container');
+            if (reviewContainer) {
+                reviewContainer.remove();
+            }
+        });
+    }); 
+}
+
+function configurarPainelLateral() {
+    document.querySelectorAll('.restaurant-card').forEach(card => {
+        const panel = card.querySelector('.side-panel');
+
+        // Ao passar o mouse sobre o card, mostrar o painel lateral
+        card.addEventListener('mouseover', () => {
+            panel.style.display = 'block'; // Mostrar o painel
+        });
+
+        // Ao sair o mouse do card, esconder o painel lateral
+        card.addEventListener('mouseout', () => {
+            panel.style.display = 'none'; // Esconder o painel
         });
     });
 }
+
+// Chama a função para configurar os eventos ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    configurarPainelLateral();
+});   

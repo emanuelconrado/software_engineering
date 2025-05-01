@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Usuário</title>
+  <link rel="stylesheet" href="../../../css/users.css" />
+</head>
+
+<body>
+  <header class="hero">
+    <h1 class="hero-title">Perfil de Usuário</h1>
+  </header>
+
+  <main class="main-content">
+    <div class="form-container">
+      <h2>Informações de Conta</h2>
+      
+      <!-- Exibição das informações do usuário -->
+      <div id="userInfo" class="user-info">
+        <p><strong>Email:</strong> <span id="userEmail"></span></p>
+        <p><strong>Nome:</strong> <span id="userName"></span></p>
+      </div>
+
+      <h3>Editar Perfil</h3>
+      <form id="editForm">
+        <div class="form-group">
+          <label for="editNome">Nome</label>
+          <input type="text" id="editNome" placeholder="Digite seu nome" />
+        </div>
+
+        <button type="button" id="saveButton" class="button button-primary">Salvar Alterações</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Plataforma de Restaurantes. Todos os direitos reservados.</p>
+  </footer>
+
+  <script type="module" src="../../../script/users.js"></script>
+</body>
+
+</html>

@@ -1,23 +1,27 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getApp, initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { firebaseConfig } from "./firebase-env.js";
-
-// Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { db } from "../api/firebase_config.js";
+import { auth } from "../api/firebase_config.js";
 
 // Função de Cadastro
-export async function cadastrarUsuario(email, senha) {
+export async function cadastrarUsuario(email, senha, nome){
   try {
+    // Cria o usuário no Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-    console.log("Usuário cadastrado:", user.uid);
-    return user; // Retorna o usuário
+
+    // Cria um documento no Firestore com os dados do usuário
+    await setDoc(doc(db, "usuarios", user.uid), {
+      nome: nome,
+      email: email,
+      createdAt: new Date(),
+    });
+
+    return user; // Retorna o usuário criado
   } catch (error) {
-    console.error("Erro ao cadastrar:", error.message);
-    throw error; // Lança o erro para ser tratado no botão
+    throw error; // Lança o erro para ser tratado no front-end
   }
-}
+};
 
 // Função de Login
 export async function loginUsuario(email, senha) {

@@ -268,3 +268,29 @@ footer {
     font-weight: normal;
     text-align: center; /* Alinha o texto à esquerda */
 }
+
+#toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #597445;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 9999;
+  }
+  
+  #toast.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  

@@ -57,8 +57,8 @@ async function carregarEnderecosDoFirebase(input = '') {
       // Query por nome normalizado
       const queryNome = query(
         collection(db, 'estabelecimentos'),
-        where('nome_normalizado', '>=', termoBusca),
-        where('nome_normalizado', '<=', termoBusca + '\uf8ff')
+        where('nome', '>=', termoBusca),
+        where('nome', '<=', termoBusca + '\uf8ff')
       );
 
       // Query por restrição
